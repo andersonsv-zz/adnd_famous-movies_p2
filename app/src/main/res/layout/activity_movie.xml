@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parentMovieActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvMovies"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ProgressBar
+        android:id="@+id/pbIndicador"
+        style="@style/ProgressBar"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/tvErrorMessage"
+        style="@style/ErrorMessage"
+        android:text="@string/error_message_list" />
+
+    <LinearLayout
+        android:id="@+id/llInternetAccessError"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <TextView
+            style="@style/Offline"
+            android:text="@string/offline" />
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:contentDescription="@string/content_description_img_offline"
+            android:src="@drawable/ic_local_movies_black_24dp" />
+
+        <TextView
+            style="@style/OfflineMsg"
+            android:text="@string/offline_msg" />
+    </LinearLayout>
+</RelativeLayout>
