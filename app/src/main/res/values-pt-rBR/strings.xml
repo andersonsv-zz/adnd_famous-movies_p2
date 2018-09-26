@@ -4,6 +4,7 @@
     <string name="error_message_list">Ocorreu um erro ao buscar a lista</string>
     <string name="most_popular">Mais populares</string>
     <string name="top_rated">Mais votados</string>
+    <string name="favorites">Favoritos</string>
     <string name="content_description_img_ivBackdrop">Imagem de fundo do filme</string>
     <string name="content_description_img_ivPoster">Poster do filme</string>
     <string name="content_description_img_offline">Imagem de erro informando a falta de internet</string>
