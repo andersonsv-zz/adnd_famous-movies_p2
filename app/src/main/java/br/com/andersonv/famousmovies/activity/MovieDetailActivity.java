@@ -4,6 +4,7 @@ package br.com.andersonv.famousmovies.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -59,5 +60,11 @@ public class MovieDetailActivity extends AppCompatActivity {
             tvVoteAverage.setText(String.valueOf(movie.getVoteAverage()));
             tvOverview.setText(movie.getOverview());
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_detail_header, menu);
+        return true;
     }
 }

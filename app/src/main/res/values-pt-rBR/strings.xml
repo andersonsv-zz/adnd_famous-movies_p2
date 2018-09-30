@@ -16,4 +16,7 @@
     <string name="offline_no_internet">Sem internet?</string>
     <string name="offline_no_internet_retry">Tente novamente</string>
 
+    <!-- detail -->
+    <string name="detail_menu_share">Compartilhar vídeo</string>
+
 </resources>

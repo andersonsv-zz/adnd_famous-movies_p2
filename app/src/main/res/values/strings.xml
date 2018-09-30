@@ -14,4 +14,7 @@
     <string name="offline_no_internet">Without internet?</string>
     <string name="offline_no_internet_retry">Retry again</string>
 
+    <!-- detail -->
+    <string name="detail_menu_share">Share trailer</string>
+
 </resources>
