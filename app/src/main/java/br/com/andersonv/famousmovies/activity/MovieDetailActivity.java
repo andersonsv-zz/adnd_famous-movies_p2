@@ -9,9 +9,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import br.com.andersonv.famousmovies.R;
 import br.com.andersonv.famousmovies.data.Movie;
+import br.com.andersonv.famousmovies.util.GradientTransformation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -19,6 +26,9 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     private static final String IMAGE_URL = "http://image.tmdb.org/t/p/w185/";
     private static final String IMAGE_BACKDROP_URL = "http://image.tmdb.org/t/p/w342/";
+
+    private static final String DATE_FORMAT = "dd/MM/yyyy";
+    private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
 
     @BindView(R.id.ivBackdrop)
     ImageView ivBackdrop;
@@ -46,8 +56,13 @@ public class MovieDetailActivity extends AppCompatActivity {
         if (intent.hasExtra(Intent.EXTRA_INTENT)) {
             Movie movie = intent.getParcelableExtra(Intent.EXTRA_INTENT);
 
+            List<Transformation> transformations = new ArrayList<>();
+
+            transformations.add(new GradientTransformation());
+
             Picasso.with(this)
                     .load(IMAGE_BACKDROP_URL + movie.getBackdropPath())
+                    .transform(transformations)
                     .into(ivBackdrop);
 
             Picasso.with(this)

@@ -15,7 +15,7 @@ public interface FavoriteDao {
 
     @Insert
     void insertFavorite(FavoriteEntry favoriteEntry);
-    
+
     @Delete
     void deleteFavorite(FavoriteEntry favoriteEntry);
 
