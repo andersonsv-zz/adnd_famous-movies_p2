@@ -37,6 +37,9 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
     private static final String DATE_FORMAT = "dd/MM/yyyy";
     private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
 
+    private static final int TRAILER_LOADER_ID = 0;
+    private static final int REVIEW_LOADER_ID = 0;
+    
     @BindView(R.id.ivBackdrop)
     ImageView ivBackdrop;
     @BindView(R.id.ivPoster)

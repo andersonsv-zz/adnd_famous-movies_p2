@@ -78,8 +78,8 @@ public class MovieActivity extends AppCompatActivity implements MovieRecyclerVie
         } else {
             movies = savedInstanceState.getParcelableArrayList(SAVE_STATE_OBJECT_NAME);
 
-            MovieRecyclerViewAdapter adapter = new MovieRecyclerViewAdapter(context, movies, MovieActivity.this);
-            rvMovies.setAdapter(adapter);
+            mMovieAdapter = new MovieRecyclerViewAdapter(context, movies, MovieActivity.this);
+            rvMovies.setAdapter(mMovieAdapter);
             showMovieDataView();
 
         }
@@ -239,8 +239,8 @@ public class MovieActivity extends AppCompatActivity implements MovieRecyclerVie
     @Override
     public void onLoadFinished(@NonNull Loader<List<Movie>> loader, List<Movie> data) {
         mLoadingIndicator.setVisibility(View.INVISIBLE);
-        MovieRecyclerViewAdapter adapter = new MovieRecyclerViewAdapter(context, data, MovieActivity.this);
-        rvMovies.setAdapter(adapter);
+        mMovieAdapter = new MovieRecyclerViewAdapter(context, data, MovieActivity.this);
+        rvMovies.setAdapter(mMovieAdapter);
 
         if (null == data) {
             showErrorMessage();
