@@ -3,6 +3,10 @@ package br.com.andersonv.famousmovies.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.widget.ImageView;
@@ -18,11 +22,14 @@ import java.util.Locale;
 
 import br.com.andersonv.famousmovies.R;
 import br.com.andersonv.famousmovies.data.Movie;
+import br.com.andersonv.famousmovies.data.Review;
+import br.com.andersonv.famousmovies.data.Trailer;
 import br.com.andersonv.famousmovies.util.GradientTransformation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MovieDetailActivity extends AppCompatActivity {
+
+public class MovieDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks{
 
     private static final String IMAGE_URL = "http://image.tmdb.org/t/p/w185/";
     private static final String IMAGE_BACKDROP_URL = "http://image.tmdb.org/t/p/w342/";
@@ -81,5 +88,22 @@ public class MovieDetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_detail_header, menu);
         return true;
+    }
+
+
+    @NonNull
+    @Override
+    public Loader onCreateLoader(int id, @Nullable Bundle args) {
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader loader, Object data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader loader) {
+
     }
 }
