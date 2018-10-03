@@ -15,11 +15,13 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +44,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static java.security.AccessController.getContext;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
@@ -72,6 +73,8 @@ public class MovieDetailActivity extends AppCompatActivity {
     ListView lvTrailers;
     @BindView(R.id.lvReviews)
     ListView lvReviews;
+    @BindView(R.id.pbTrailer)
+    ProgressBar pbTrailer;
 
     private Context context;
 
@@ -125,9 +128,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         Bundle bundleForLoader = new Bundle();
         bundleForLoader.putLong(Intent.EXTRA_INDEX, id);
 
-        getLoaderManager().initLoader(TRAILER_LOADER_ID, bundleForLoader, trailerLoaderCallbacks);
-
-
+        getLoaderManager().restartLoader(TRAILER_LOADER_ID, bundleForLoader, trailerLoaderCallbacks).forceLoad();
     }
 
     private LoaderManager.LoaderCallbacks trailerLoaderCallbacks = new LoaderManager.LoaderCallbacks<List<Trailer>>() {
@@ -139,32 +140,24 @@ public class MovieDetailActivity extends AppCompatActivity {
                 @Override
                 public List<Trailer> loadInBackground() {
 
-                    MovieService service = RetrofitClientInstance.getRetrofitInstance().create(MovieService.class);
-
                     final Long movieId = args.getLong(Intent.EXTRA_INDEX);
-                    final List<Trailer> trailers = new ArrayList<>();
 
-                    Call<Trailers> call = service.getTrailers(movieId, BuildConfig.API_MOVIE_DB_KEY);
+                    MovieService service = RetrofitClientInstance.getRetrofitInstance().create(MovieService.class);
+                    Call<Trailers> call;
+                    call = service.getTrailers(movieId, BuildConfig.API_MOVIE_DB_KEY);
 
-                    call.enqueue(new Callback<Trailers>() {
-                        @Override
-                        public void onResponse(Call<Trailers> call, Response<Trailers> response) {
-                            List<Trailer> trailersRest = response.body().getTrailers();
-                            trailers.addAll(trailersRest);
-                        }
-
-                        @Override
-                        public void onFailure(Call<Trailers> call, Throwable t) {
-
-                        }
-                    });
-
-                    return trailers;
+                    try {
+                        return call.execute().body().getTrailers();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return null;
+                    }
                 }
 
                 @Override
                 protected void onStartLoading() {
                     forceLoad();
+                    pbTrailer.setVisibility(View.VISIBLE);
                 }
             };
         }
@@ -177,6 +170,8 @@ public class MovieDetailActivity extends AppCompatActivity {
                 trailerAdapter = new TrailerItemAdapter(context, data);
                 lvTrailers.setAdapter(trailerAdapter);
                 lvTrailers.setVisibility(View.VISIBLE);
+
+                pbTrailer.setVisibility(View.INVISIBLE);
 
                 /*reviewsLv.setFocusable(false);
                 movie.setReviews(reviews);
