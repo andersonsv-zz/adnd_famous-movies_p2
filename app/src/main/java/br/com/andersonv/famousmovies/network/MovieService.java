@@ -16,9 +16,9 @@ public interface MovieService {
     Call<Movies> getPopular(@Query("page") Integer page, @Query("language") String language, @Query("api_key") String apiKey);
 
     @GET("3/movie/{id}/reviews")
-    Call<Reviews> getReviews(@Path("id") long id);
+    Call<Reviews> getReviews(@Path("id") long id, @Query("api_key") String apiKey);
 
     @GET("3/movie/{id}/videos")
-    Call<Trailers> getTrailers(@Path("id") long id);
+    Call<Trailers> getTrailers(@Path("id") long id, @Query("api_key") String apiKey);
 
 }
