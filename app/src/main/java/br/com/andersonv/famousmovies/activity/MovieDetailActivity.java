@@ -1,12 +1,10 @@
 package br.com.andersonv.famousmovies.activity;
 
 
+import android.app.LoaderManager;
 import android.content.Intent;
+import android.content.Loader;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.widget.ImageView;
@@ -20,13 +18,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import br.com.andersonv.famousmovies.BuildConfig;
 import br.com.andersonv.famousmovies.R;
 import br.com.andersonv.famousmovies.data.Movie;
-import br.com.andersonv.famousmovies.data.Review;
-import br.com.andersonv.famousmovies.data.Trailer;
+import br.com.andersonv.famousmovies.data.MovieSearch;
+import br.com.andersonv.famousmovies.data.Movies;
+import br.com.andersonv.famousmovies.data.Reviews;
+import br.com.andersonv.famousmovies.data.Trailers;
+import br.com.andersonv.famousmovies.network.MovieService;
+import br.com.andersonv.famousmovies.network.RetrofitClientInstance;
 import br.com.andersonv.famousmovies.util.GradientTransformation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
 
 
 public class MovieDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks{
@@ -38,8 +42,8 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
     private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
 
     private static final int TRAILER_LOADER_ID = 0;
-    private static final int REVIEW_LOADER_ID = 0;
-    
+    private static final int REVIEW_LOADER_ID = 1;
+
     @BindView(R.id.ivBackdrop)
     ImageView ivBackdrop;
     @BindView(R.id.ivPoster)
@@ -64,7 +68,9 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
         Intent intent = getIntent();
 
         if (intent.hasExtra(Intent.EXTRA_INTENT)) {
-            Movie movie = intent.getParcelableExtra(Intent.EXTRA_INTENT);
+            final Movie movie = intent.getParcelableExtra(Intent.EXTRA_INTENT);
+
+            initLoaders(movie.getId());
 
             List<Transformation> transformations = new ArrayList<>();
 
@@ -93,20 +99,61 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
         return true;
     }
 
+    private void initLoaders(final Long id) {
 
-    @NonNull
+        Bundle bundleForLoader = new Bundle();
+        bundleForLoader.putLong(Intent.EXTRA_INDEX, id);
+
+        getLoaderManager().initLoader(TRAILER_LOADER_ID, bundleForLoader, this);
+        getLoaderManager().initLoader(REVIEW_LOADER_ID, bundleForLoader, this);
+    }
+
+
     @Override
-    public Loader onCreateLoader(int id, @Nullable Bundle args) {
+    public Loader onCreateLoader(int id, final Bundle args) {
+
+        Long movieId = args.getLong(Intent.EXTRA_INDEX);
+
+        if (id == TRAILER_LOADER_ID){
+            MovieService service = RetrofitClientInstance.getRetrofitInstance().create(MovieService.class);
+            Call<Trailers> call;
+
+            call = service.getTrailers(movieId);
+
+            try {
+                return (Loader) call.execute().body().getTrailers();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }else if (id == REVIEW_LOADER_ID){
+            MovieService service = RetrofitClientInstance.getRetrofitInstance().create(MovieService.class);
+            Call<Reviews> call;
+
+            call = service.getReviews(movieId);
+
+            try {
+                return (Loader) call.execute().body().getReviews();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
         return null;
     }
 
     @Override
-    public void onLoadFinished(@NonNull Loader loader, Object data) {
+    public void onLoadFinished(Loader loader, Object data) {
+        if (loader.getId() == TRAILER_LOADER_ID){
 
+        }
+        else if(loader.getId() == REVIEW_LOADER_ID){
+
+        }
     }
 
     @Override
-    public void onLoaderReset(@NonNull Loader loader) {
+    public void onLoaderReset(Loader loader) {
 
     }
 }

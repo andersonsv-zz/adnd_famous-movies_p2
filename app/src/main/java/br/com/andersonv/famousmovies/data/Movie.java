@@ -66,6 +66,8 @@ public class Movie implements Parcelable {
         parcel.writeDouble(voteAverage);
     }
 
+    public Long getId() { return id; }
+
     public String getPosterPath() {
         return posterPath;
     }
