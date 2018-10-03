@@ -6,11 +6,8 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,7 +18,6 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +25,11 @@ import java.util.Locale;
 
 import br.com.andersonv.famousmovies.BuildConfig;
 import br.com.andersonv.famousmovies.R;
+import br.com.andersonv.famousmovies.adapter.ReviewItemAdapter;
 import br.com.andersonv.famousmovies.adapter.TrailerItemAdapter;
 import br.com.andersonv.famousmovies.data.Movie;
-import br.com.andersonv.famousmovies.data.MovieSearch;
-import br.com.andersonv.famousmovies.data.Movies;
+import br.com.andersonv.famousmovies.data.Review;
+import br.com.andersonv.famousmovies.data.Reviews;
 import br.com.andersonv.famousmovies.data.Trailer;
 import br.com.andersonv.famousmovies.data.Trailers;
 import br.com.andersonv.famousmovies.network.MovieService;
@@ -41,8 +38,6 @@ import br.com.andersonv.famousmovies.util.GradientTransformation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class MovieDetailActivity extends AppCompatActivity {
@@ -75,10 +70,13 @@ public class MovieDetailActivity extends AppCompatActivity {
     ListView lvReviews;
     @BindView(R.id.pbTrailer)
     ProgressBar pbTrailer;
+    @BindView(R.id.pbReview)
+    ProgressBar pbReview;
 
     private Context context;
 
     private TrailerItemAdapter trailerAdapter;
+    private ReviewItemAdapter reviewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +127,8 @@ public class MovieDetailActivity extends AppCompatActivity {
         bundleForLoader.putLong(Intent.EXTRA_INDEX, id);
 
         getLoaderManager().restartLoader(TRAILER_LOADER_ID, bundleForLoader, trailerLoaderCallbacks).forceLoad();
+        getLoaderManager().restartLoader(REVIEW_LOADER_ID, bundleForLoader, reviewLoaderCallbacks).forceLoad();
+
     }
 
     private LoaderManager.LoaderCallbacks trailerLoaderCallbacks = new LoaderManager.LoaderCallbacks<List<Trailer>>() {
@@ -173,12 +173,6 @@ public class MovieDetailActivity extends AppCompatActivity {
 
                 pbTrailer.setVisibility(View.INVISIBLE);
 
-                /*reviewsLv.setFocusable(false);
-                movie.setReviews(reviews);
-                reviewAdapter = new MovieReviewItemAdapter(getContext(), reviews);
-                reviewsLv.setAdapter(reviewAdapter);
-                reviewsLv.setVisibility(View.VISIBLE);
-                reviewsLabelTv.setVisibility(View.VISIBLE);*/
             } else {
                // reviewsLv.setVisibility(View.GONE);
                // reviewsLabelTv.setVisibility(View.GONE);
@@ -187,6 +181,60 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         @Override
         public void onLoaderReset(android.content.Loader<List<Trailer>> loader) {
+
+        }
+    };
+
+    private LoaderManager.LoaderCallbacks reviewLoaderCallbacks = new LoaderManager.LoaderCallbacks<List<Review>>() {
+
+        @Override
+        public android.content.Loader<List<Review>> onCreateLoader(int id, final Bundle args) {
+            return new AsyncTaskLoader<List<Review>>(context) {
+                @Nullable
+                @Override
+                public List<Review> loadInBackground() {
+
+                    final Long movieId = args.getLong(Intent.EXTRA_INDEX);
+
+                    MovieService service = RetrofitClientInstance.getRetrofitInstance().create(MovieService.class);
+                    Call<Reviews> call;
+                    call = service.getReviews(movieId, BuildConfig.API_MOVIE_DB_KEY);
+
+                    try {
+                        return call.execute().body().getReviews();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                }
+
+                @Override
+                protected void onStartLoading() {
+                    forceLoad();
+                    pbReview.setVisibility(View.VISIBLE);
+                }
+            };
+        }
+
+        @Override
+        public void onLoadFinished(android.content.Loader<List<Review>> loader, List<Review> data) {
+            if (data != null && !data.isEmpty()) {
+                lvReviews.setFocusable(false);
+
+                reviewAdapter = new ReviewItemAdapter(context, data);
+                lvReviews.setAdapter(reviewAdapter);
+                lvReviews.setVisibility(View.VISIBLE);
+
+                pbReview.setVisibility(View.INVISIBLE);
+
+            } else {
+                // reviewsLv.setVisibility(View.GONE);
+                // reviewsLabelTv.setVisibility(View.GONE);
+            }
+        }
+
+        @Override
+        public void onLoaderReset(android.content.Loader<List<Review>> loader) {
 
         }
     };
