@@ -24,6 +24,8 @@ import br.com.andersonv.famousmovies.data.Trailer;
 public class TrailerItemAdapter extends ArrayAdapter<Trailer> {
 
     private static final String IMAGE_YOUTUBE_DEFAULT_THUMB = "https://img.youtube.com/vi/{0}/default.jpg";
+    private static final String URL_WEB_YOUTUBE = "http://www.youtube.com/watch?v=";
+
     private final Context context;
 
     public TrailerItemAdapter(@NonNull Context context, @NonNull List<Trailer> trailers) {
@@ -56,7 +58,7 @@ public class TrailerItemAdapter extends ArrayAdapter<Trailer> {
             public void onClick(View v) {
 
                 Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + trailer.getKey()));
-                Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + trailer.getKey()));
+                Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(URL_WEB_YOUTUBE + trailer.getKey()));
                     try {
                         context.startActivity(appIntent);
                     } catch (ActivityNotFoundException ex) {

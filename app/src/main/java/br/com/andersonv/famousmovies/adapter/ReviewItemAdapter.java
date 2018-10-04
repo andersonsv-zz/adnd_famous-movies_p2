@@ -32,10 +32,10 @@ public class ReviewItemAdapter extends ArrayAdapter<Review> {
         final Review review = getItem(position);
 
         final TextView tvReviewTitle = convertView.findViewById(R.id.tvReviewAuthor);
-        //final TextView tvReview = convertView.findViewById(R.id.tvReview);
+        final TextView tvReviewContent = convertView.findViewById(R.id.tvReviewContent);
 
         tvReviewTitle.setText(review.getAuthor());
-        //tvReview.setText(review.getContent());
+        tvReviewContent.setText(review.getContent());
 
         return convertView;
     }

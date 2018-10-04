@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
@@ -41,6 +42,8 @@ import retrofit2.Call;
 
 
 public class MovieDetailActivity extends AppCompatActivity {
+
+    private static final String TAG = MovieDetailActivity.class.getSimpleName();
 
     private static final String IMAGE_URL = "http://image.tmdb.org/t/p/w185/";
     private static final String IMAGE_BACKDROP_URL = "http://image.tmdb.org/t/p/w342/";
@@ -107,8 +110,6 @@ public class MovieDetailActivity extends AppCompatActivity {
             tvTitle.setText(movie.getTitle());
             this.setTitle(movie.getTitle());
 
-          //  java.text.DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
-           // String dataFormated = dateFormat.format(movie.getReleaseDate());
 
             tvRelease.setText(movie.getReleaseDate());
             tvVoteAverage.setText(String.valueOf(movie.getVoteAverage()));
@@ -165,7 +166,10 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         @Override
         public void onLoadFinished(android.content.Loader<List<Trailer>> loader, List<Trailer> data) {
+
             if (data != null && !data.isEmpty()) {
+                Log.d(TAG, "Trailers: " + data.size());
+
                 lvTrailers.setFocusable(false);
 
                 trailerAdapter = new TrailerItemAdapter(context, data);
@@ -221,6 +225,10 @@ public class MovieDetailActivity extends AppCompatActivity {
         @Override
         public void onLoadFinished(android.content.Loader<List<Review>> loader, List<Review> data) {
             if (data != null && !data.isEmpty()) {
+
+                Log.d(TAG, "Reviews: " + data.size());
+
+
                 lvReviews.setFocusable(false);
 
                 reviewAdapter = new ReviewItemAdapter(context, data);
