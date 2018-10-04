@@ -28,10 +28,14 @@ public class ReviewItemAdapter extends ArrayAdapter<Review> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.review_item, parent, false);
         }
 
+        //TODO - incluir butterknife
         final Review review = getItem(position);
 
         final TextView tvReviewTitle = convertView.findViewById(R.id.tvReviewAuthor);
+        //final TextView tvReview = convertView.findViewById(R.id.tvReview);
+
         tvReviewTitle.setText(review.getAuthor());
+        //tvReview.setText(review.getContent());
 
         return convertView;
     }

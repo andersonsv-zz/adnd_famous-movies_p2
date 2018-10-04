@@ -22,8 +22,12 @@ public class Trailer implements Parcelable {
     @SerializedName("name")
     private final String name;
 
+    @SerializedName("key")
+    private final String key;
+
     private Trailer(Parcel in) {
         this.name = in.readString();
+        this.key = in.readString();
     }
 
     @Override
@@ -34,22 +38,15 @@ public class Trailer implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeString(name);
+        parcel.writeString(key);
+    }
+
+    public String getKey() {
+        return key;
     }
 
     public String getName() {
         return name;
     }
-
-    /*
-    "id": "5a85f6a1c3a36862e1029f18",
-            "iso_639_1": "pt",
-            "iso_3166_1": "PT",
-            "key": "5yNlNnP1AAY",
-            "name": "The ShawShank Redemption Trailer High-Quality Legendado PT-PT",
-            "site": "YouTube",
-            "size": 1080,
-            "type": "Trailer"
-     */
-
 
 }

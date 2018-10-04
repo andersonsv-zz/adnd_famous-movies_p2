@@ -45,9 +45,6 @@ public class MovieDetailActivity extends AppCompatActivity {
     private static final String IMAGE_URL = "http://image.tmdb.org/t/p/w185/";
     private static final String IMAGE_BACKDROP_URL = "http://image.tmdb.org/t/p/w342/";
 
-    private static final String DATE_FORMAT = "dd/MM/yyyy";
-    private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
-
     private static final int TRAILER_LOADER_ID = 0;
     private static final int REVIEW_LOADER_ID = 1;
 
@@ -109,6 +106,10 @@ public class MovieDetailActivity extends AppCompatActivity {
 
             tvTitle.setText(movie.getTitle());
             this.setTitle(movie.getTitle());
+
+          //  java.text.DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
+           // String dataFormated = dateFormat.format(movie.getReleaseDate());
+
             tvRelease.setText(movie.getReleaseDate());
             tvVoteAverage.setText(String.valueOf(movie.getVoteAverage()));
             tvOverview.setText(movie.getOverview());
@@ -174,6 +175,7 @@ public class MovieDetailActivity extends AppCompatActivity {
                 pbTrailer.setVisibility(View.INVISIBLE);
 
             } else {
+                //TODO - incluir mensagem de erro se não houver filmes
                // reviewsLv.setVisibility(View.GONE);
                // reviewsLabelTv.setVisibility(View.GONE);
             }

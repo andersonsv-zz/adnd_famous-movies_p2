@@ -86,7 +86,7 @@
         <ListView
             android:id="@+id/lvTrailers"
             android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
@@ -99,7 +99,7 @@
         <ListView
             android:id="@+id/lvReviews"
             android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
@@ -114,6 +114,7 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/lvTrailers"
             app:layout_constraintEnd_toEndOf="@+id/lvTrailers"
             app:layout_constraintStart_toStartOf="@+id/lvTrailers"
@@ -129,7 +130,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/lvReviews"
             app:layout_constraintEnd_toEndOf="@+id/lvReviews"
             app:layout_constraintStart_toStartOf="@+id/lvReviews"
-            app:layout_constraintTop_toTopOf="@+id/lvReviews" />
+            app:layout_constraintTop_toTopOf="@+id/lvReviews"
+            tools:visibility="invisible" />
 
 
     </android.support.constraint.ConstraintLayout>

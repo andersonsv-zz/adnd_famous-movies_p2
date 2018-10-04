@@ -19,8 +19,9 @@
     <!-- detail -->
     <string name="detail_menu_share">Compartilhar vídeo</string>
 
-    <string name="detail_tab_overview">Sinopse</string>
-    <string name="detail_tab_reviews">Críticas</string>
-    <string name="detail_tab_trailers">Vídeos</string>
+    <string name="detail_subtitle_overview">Sinopse</string>
+    <string name="detail_subtitle_reviews">Críticas</string>
+    <string name="detail_subtitle_trailers">Vídeos</string>
+
 
 </resources>

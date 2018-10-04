@@ -17,7 +17,7 @@
     <!-- detail -->
     <string name="detail_menu_share">Share trailer</string>
 
-    <string name="detail_tab_overview">Overview</string>
-    <string name="detail_tab_reviews">Reviews</string>
-    <string name="detail_tab_trailers">Trailers</string>
+    <string name="detail_subtitle_overview">Overview</string>
+    <string name="detail_subtitle_reviews">Reviews</string>
+    <string name="detail_subtitle_trailers">Trailers</string>
 </resources>
