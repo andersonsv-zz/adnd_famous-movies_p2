@@ -90,15 +90,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvOverViewSubtitle" />
 
-        <ListView
-            android:id="@+id/lvTrailers"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvTrailers"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -110,10 +110,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/lvTrailers"
-            app:layout_constraintEnd_toEndOf="@+id/lvTrailers"
-            app:layout_constraintStart_toStartOf="@+id/lvTrailers"
-            app:layout_constraintTop_toTopOf="@+id/lvTrailers"
+            app:layout_constraintBottom_toBottomOf="@+id/rvTrailers"
+            app:layout_constraintEnd_toEndOf="@+id/rvTrailers"
+            app:layout_constraintStart_toStartOf="@+id/rvTrailers"
+            app:layout_constraintTop_toTopOf="@+id/rvTrailers"
             tools:visibility="invisible" />
 
         <ProgressBar
@@ -122,10 +122,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/lvReviews"
-            app:layout_constraintEnd_toEndOf="@+id/lvReviews"
-            app:layout_constraintStart_toStartOf="@+id/lvReviews"
-            app:layout_constraintTop_toTopOf="@+id/lvReviews"
+            app:layout_constraintBottom_toBottomOf="@+id/rvReviews"
+            app:layout_constraintEnd_toEndOf="@+id/rvReviews"
+            app:layout_constraintStart_toStartOf="@+id/rvReviews"
+            app:layout_constraintTop_toTopOf="@+id/rvReviews"
             tools:visibility="invisible" />
 
         <TextView
@@ -171,17 +171,19 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lvTrailers" />
+            app:layout_constraintTop_toBottomOf="@+id/rvTrailers" />
 
-        <ListView
-            android:id="@+id/lvReviews"
-            android:layout_width="0dp"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvReviews"
+            android:layout_width="347dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

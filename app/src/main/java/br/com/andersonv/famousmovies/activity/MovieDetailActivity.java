@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -19,15 +21,14 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import br.com.andersonv.famousmovies.BuildConfig;
 import br.com.andersonv.famousmovies.R;
 import br.com.andersonv.famousmovies.adapter.ReviewItemAdapter;
-import br.com.andersonv.famousmovies.adapter.TrailerItemAdapter;
+import br.com.andersonv.famousmovies.adapter.ReviewRecyclerViewAdapter;
+import br.com.andersonv.famousmovies.adapter.TrailerRecyclerViewAdapter;
 import br.com.andersonv.famousmovies.data.Movie;
 import br.com.andersonv.famousmovies.data.Review;
 import br.com.andersonv.famousmovies.data.Reviews;
@@ -41,7 +42,7 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 
 
-public class MovieDetailActivity extends AppCompatActivity {
+public class MovieDetailActivity extends AppCompatActivity  {
 
     private static final String TAG = MovieDetailActivity.class.getSimpleName();
 
@@ -64,10 +65,10 @@ public class MovieDetailActivity extends AppCompatActivity {
     TextView tvVoteAverage;
     @BindView(R.id.tvOverview)
     TextView tvOverview;
-    @BindView(R.id.lvTrailers)
-    ListView lvTrailers;
-    @BindView(R.id.lvReviews)
-    ListView lvReviews;
+    @BindView(R.id.rvTrailers)
+    RecyclerView rvTrailers;
+    @BindView(R.id.rvReviews)
+    RecyclerView rvReviews;
     @BindView(R.id.pbTrailer)
     ProgressBar pbTrailer;
     @BindView(R.id.pbReview)
@@ -75,8 +76,8 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     private Context context;
 
-    private TrailerItemAdapter trailerAdapter;
-    private ReviewItemAdapter reviewAdapter;
+    private TrailerRecyclerViewAdapter trailerAdapter;
+    private ReviewRecyclerViewAdapter reviewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,11 +171,14 @@ public class MovieDetailActivity extends AppCompatActivity {
             if (data != null && !data.isEmpty()) {
                 Log.d(TAG, "Trailers: " + data.size());
 
-                lvTrailers.setFocusable(false);
+                rvTrailers.setFocusable(false);
 
-                trailerAdapter = new TrailerItemAdapter(context, data);
-                lvTrailers.setAdapter(trailerAdapter);
-                lvTrailers.setVisibility(View.VISIBLE);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+                rvTrailers.setLayoutManager(linearLayoutManager);
+
+                trailerAdapter = new TrailerRecyclerViewAdapter(context, data);
+                rvTrailers.setAdapter(trailerAdapter);
+                rvTrailers.setVisibility(View.VISIBLE);
 
                 pbTrailer.setVisibility(View.INVISIBLE);
 
@@ -228,12 +232,14 @@ public class MovieDetailActivity extends AppCompatActivity {
 
                 Log.d(TAG, "Reviews: " + data.size());
 
+                rvReviews.setFocusable(false);
 
-                lvReviews.setFocusable(false);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+                rvReviews.setLayoutManager(linearLayoutManager);
 
-                reviewAdapter = new ReviewItemAdapter(context, data);
-                lvReviews.setAdapter(reviewAdapter);
-                lvReviews.setVisibility(View.VISIBLE);
+                reviewAdapter = new ReviewRecyclerViewAdapter(context, data);
+                rvReviews.setAdapter(reviewAdapter);
+                rvReviews.setVisibility(View.VISIBLE);
 
                 pbReview.setVisibility(View.INVISIBLE);
 
@@ -248,6 +254,9 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         }
     };
+
+
+
 
 //share
     /*public void onTrailerClickShare(MovieTrailer trailer) {
