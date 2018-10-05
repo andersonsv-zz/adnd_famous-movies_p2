@@ -2,6 +2,8 @@ package br.com.andersonv.famousmovies.activity;
 
 
 import android.app.LoaderManager;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.Intent;
@@ -12,9 +14,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -26,7 +28,7 @@ import java.util.List;
 
 import br.com.andersonv.famousmovies.BuildConfig;
 import br.com.andersonv.famousmovies.R;
-import br.com.andersonv.famousmovies.adapter.ReviewItemAdapter;
+import br.com.andersonv.famousmovies.adapter.MovieRecyclerViewAdapter;
 import br.com.andersonv.famousmovies.adapter.ReviewRecyclerViewAdapter;
 import br.com.andersonv.famousmovies.adapter.TrailerRecyclerViewAdapter;
 import br.com.andersonv.famousmovies.data.Movie;
@@ -34,8 +36,11 @@ import br.com.andersonv.famousmovies.data.Review;
 import br.com.andersonv.famousmovies.data.Reviews;
 import br.com.andersonv.famousmovies.data.Trailer;
 import br.com.andersonv.famousmovies.data.Trailers;
+import br.com.andersonv.famousmovies.database.AppDatabase;
+import br.com.andersonv.famousmovies.database.FavoriteEntry;
 import br.com.andersonv.famousmovies.network.MovieService;
 import br.com.andersonv.famousmovies.network.RetrofitClientInstance;
+import br.com.andersonv.famousmovies.tasks.AppExecutors;
 import br.com.andersonv.famousmovies.util.GradientTransformation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +56,8 @@ public class MovieDetailActivity extends AppCompatActivity  {
 
     private static final int TRAILER_LOADER_ID = 0;
     private static final int REVIEW_LOADER_ID = 1;
+
+    private AppDatabase mDb;
 
     @BindView(R.id.ivBackdrop)
     ImageView ivBackdrop;
@@ -75,6 +82,7 @@ public class MovieDetailActivity extends AppCompatActivity  {
     ProgressBar pbReview;
 
     private Context context;
+    private String firstTrailerYouTube;
 
     private TrailerRecyclerViewAdapter trailerAdapter;
     private ReviewRecyclerViewAdapter reviewAdapter;
@@ -87,35 +95,55 @@ public class MovieDetailActivity extends AppCompatActivity  {
         ButterKnife.bind(this);
 
         context = this;
+        mDb = AppDatabase.getInstance(getApplicationContext());
 
         Intent intent = getIntent();
 
         if (intent.hasExtra(Intent.EXTRA_INTENT)) {
-            final Movie movie = intent.getParcelableExtra(Intent.EXTRA_INTENT);
-
-            initLoaders(movie.getId());
-
-            List<Transformation> transformations = new ArrayList<>();
-
-            transformations.add(new GradientTransformation());
-
-            Picasso.with(this)
-                    .load(IMAGE_BACKDROP_URL + movie.getBackdropPath())
-                    .transform(transformations)
-                    .into(ivBackdrop);
-
-            Picasso.with(this)
-                    .load(IMAGE_URL + movie.getPosterPath())
-                    .into(ivPoster);
-
-            tvTitle.setText(movie.getTitle());
-            this.setTitle(movie.getTitle());
-
-
-            tvRelease.setText(movie.getReleaseDate());
-            tvVoteAverage.setText(String.valueOf(movie.getVoteAverage()));
-            tvOverview.setText(movie.getOverview());
+            populateUI(intent);
         }
+
+    }
+
+    private void populateUI(Intent intent){
+        final Movie movie = intent.getParcelableExtra(Intent.EXTRA_INTENT);
+
+        initLoaders(movie.getId());
+
+        List<Transformation> transformations = new ArrayList<>();
+
+        transformations.add(new GradientTransformation());
+
+        Picasso.with(this)
+                .load(IMAGE_BACKDROP_URL + movie.getBackdropPath())
+                .transform(transformations)
+                .into(ivBackdrop);
+
+        Picasso.with(this)
+                .load(IMAGE_URL + movie.getPosterPath())
+                .into(ivPoster);
+
+        tvTitle.setText(movie.getTitle());
+        this.setTitle(movie.getTitle());
+
+        tvRelease.setText(movie.getReleaseDate());
+        tvVoteAverage.setText(String.valueOf(movie.getVoteAverage()));
+        tvOverview.setText(movie.getOverview());
+
+        MovieViewModelFactory factory = new MovieViewModelFactory(mDb, movie.getId());
+
+        final MovieViewModel viewModel = ViewModelProviders.of(this, factory).get(MovieViewModel.class);
+
+        viewModel.getFavorite().observe(this, new Observer<FavoriteEntry>() {
+            @Override
+            public void onChanged(@Nullable FavoriteEntry favoriteEntry) {
+                if(favoriteEntry != null) {
+                    Log.d(TAG, "Its favorite");
+                }else{
+                    Log.d(TAG, "Its not favorite");
+                }
+            }
+        });
     }
 
     @Override
@@ -169,6 +197,9 @@ public class MovieDetailActivity extends AppCompatActivity  {
         public void onLoadFinished(android.content.Loader<List<Trailer>> loader, List<Trailer> data) {
 
             if (data != null && !data.isEmpty()) {
+
+                firstTrailerYouTube = data.iterator().next().getKey();
+
                 Log.d(TAG, "Trailers: " + data.size());
 
                 rvTrailers.setFocusable(false);
@@ -255,15 +286,25 @@ public class MovieDetailActivity extends AppCompatActivity  {
         }
     };
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        if(item.getItemId() == R.id.menu_share){
 
+            if(firstTrailerYouTube != null) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
 
-//share
+                intent.putExtra(Intent.EXTRA_TEXT, "https://youtu.be/" + firstTrailerYouTube);
+                startActivity(Intent.createChooser(intent, "Teste"));
+            }
+        }
+
+        return true;
+    }
+
+    //share
     /*public void onTrailerClickShare(MovieTrailer trailer) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
 
-        intent.putExtra(Intent.EXTRA_TEXT, "https://youtu.be/" + trailer.key);
-        startActivity(Intent.createChooser(intent, getString(R.string.trailer_share_chooser)));
     }*/
 }

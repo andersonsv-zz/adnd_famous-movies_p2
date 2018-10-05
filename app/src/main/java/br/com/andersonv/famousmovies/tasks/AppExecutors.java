@@ -28,6 +28,7 @@ import java.util.concurrent.Executors;
  * <p>
  * Grouping tasks like this avoids the effects of task starvation (e.g. disk reads don't wait behind
  * webservice requests).
+ * Copy from Udacity Android Developer Course
  */
 public class AppExecutors {
 

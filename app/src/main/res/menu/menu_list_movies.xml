@@ -9,5 +9,5 @@
 
     <item
         android:id="@+id/list_movies_favorites"
-        android:title="@string/favorites" />
-</menu>
+    android:title="@string/favorites" />
+    </menu>
