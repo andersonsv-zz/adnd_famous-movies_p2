@@ -248,4 +248,13 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         }
     };
+
+//share
+    /*public void onTrailerClickShare(MovieTrailer trailer) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+
+        intent.putExtra(Intent.EXTRA_TEXT, "https://youtu.be/" + trailer.key);
+        startActivity(Intent.createChooser(intent, getString(R.string.trailer_share_chooser)));
+    }*/
 }
