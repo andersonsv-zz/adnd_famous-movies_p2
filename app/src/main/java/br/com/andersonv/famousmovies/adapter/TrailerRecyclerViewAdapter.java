@@ -16,6 +16,8 @@ import java.text.MessageFormat;
 import java.util.List;
 
 import br.com.andersonv.famousmovies.R;
+import br.com.andersonv.famousmovies.activity.MovieDetailActivity;
+import br.com.andersonv.famousmovies.data.Movie;
 import br.com.andersonv.famousmovies.data.Trailer;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,14 +26,19 @@ public class TrailerRecyclerViewAdapter extends RecyclerView.Adapter<TrailerRecy
 
     private final List<Trailer> mData;
     private final LayoutInflater mInflater;
+    private final TrailerRecyclerOnClickHandler mClickHandler;
 
     private static final String IMAGE_YOUTUBE_DEFAULT_THUMB = "https://img.youtube.com/vi/{0}/default.jpg";
 
-    public TrailerRecyclerViewAdapter(Context context, List<Trailer> data) {
+    public TrailerRecyclerViewAdapter(Context context, List<Trailer> data, TrailerRecyclerOnClickHandler onClickHandler) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
+        this.mClickHandler = onClickHandler;
     }
 
+    public interface TrailerRecyclerOnClickHandler {
+        void onClick(Trailer trailer);
+    }
 
     @Override
     @NonNull
@@ -61,7 +68,7 @@ public class TrailerRecyclerViewAdapter extends RecyclerView.Adapter<TrailerRecy
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         @BindView(R.id.ivThumbVideo)
         ImageView ivThumbVideo;
@@ -72,6 +79,15 @@ public class TrailerRecyclerViewAdapter extends RecyclerView.Adapter<TrailerRecy
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int adapterPosition = getAdapterPosition();
+            Trailer trailer = mData.get(adapterPosition);
+            mClickHandler.onClick(trailer);
         }
     }
 }

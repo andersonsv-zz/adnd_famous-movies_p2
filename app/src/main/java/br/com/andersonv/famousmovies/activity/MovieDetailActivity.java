@@ -4,9 +4,11 @@ package br.com.andersonv.famousmovies.activity;
 import android.app.LoaderManager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.ActivityNotFoundException;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -47,12 +49,20 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 
 
-public class MovieDetailActivity extends AppCompatActivity  {
+public class MovieDetailActivity extends AppCompatActivity implements TrailerRecyclerViewAdapter.TrailerRecyclerOnClickHandler {
 
     private static final String TAG = MovieDetailActivity.class.getSimpleName();
 
     private static final String IMAGE_URL = "http://image.tmdb.org/t/p/w185/";
     private static final String IMAGE_BACKDROP_URL = "http://image.tmdb.org/t/p/w342/";
+
+    private static final String YOUTUBE_URL_SHARE = "https://youtu.be/";
+
+    private static final String YOUTUBE_WEB_OPEN = "http://www.youtube.com/watch?v=";
+    private static final String YOUTUBE_APP_OPEN = "vnd.youtube:";
+
+
+    private static final String TYPE_SHARE = "text/plain";
 
     private static final int TRAILER_LOADER_ID = 0;
     private static final int REVIEW_LOADER_ID = 1;
@@ -207,7 +217,8 @@ public class MovieDetailActivity extends AppCompatActivity  {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
                 rvTrailers.setLayoutManager(linearLayoutManager);
 
-                trailerAdapter = new TrailerRecyclerViewAdapter(context, data);
+                trailerAdapter = new TrailerRecyclerViewAdapter(context, data, MovieDetailActivity.this);
+
                 rvTrailers.setAdapter(trailerAdapter);
                 rvTrailers.setVisibility(View.VISIBLE);
 
@@ -293,18 +304,25 @@ public class MovieDetailActivity extends AppCompatActivity  {
 
             if(firstTrailerYouTube != null) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
+                intent.setType(TYPE_SHARE);
 
-                intent.putExtra(Intent.EXTRA_TEXT, "https://youtu.be/" + firstTrailerYouTube);
-                startActivity(Intent.createChooser(intent, "Teste"));
+                intent.putExtra(Intent.EXTRA_TEXT, YOUTUBE_URL_SHARE + firstTrailerYouTube);
+                startActivity(Intent.createChooser(intent, getString(R.string.detail_menu_share)));
             }
         }
 
         return true;
     }
 
-    //share
-    /*public void onTrailerClickShare(MovieTrailer trailer) {
+    @Override
+    public void onClick(Trailer trailer) {
+        Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(YOUTUBE_APP_OPEN + trailer.getKey()));
+        Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(YOUTUBE_WEB_OPEN + trailer.getKey()));
 
-    }*/
+        try {
+            context.startActivity(appIntent);
+        } catch (ActivityNotFoundException ex) {
+            context.startActivity(webIntent);
+        }
+    }
 }
