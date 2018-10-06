@@ -121,6 +121,18 @@ public class MovieActivity extends AppCompatActivity implements MovieRecyclerVie
 
             return true;
         }
+
+        if (id == R.id.list_movies_favorites) {
+            this.setTitle(R.string.favorites);
+            Context context = this;
+            Class destinationClass = FavoriteActivity.class;
+
+            Intent intent = new Intent(context, destinationClass);
+
+            startActivity(intent);
+
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 

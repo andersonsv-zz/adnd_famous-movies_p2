@@ -164,8 +164,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
-        <ImageView
-            android:id="@+id/imageView"
+        <ImageButton
+            android:id="@+id/btFavorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -173,7 +173,8 @@
             android:layout_marginRight="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivBackdrop"
-            app:srcCompat="@drawable/ic_favorite_border_black_24dp" />
+            android:src="@drawable/ic_favorite_border_black_24dp"
+            android:onClick="onClickFavorite"/>
 
         <TextView
             android:id="@+id/tvRelease"

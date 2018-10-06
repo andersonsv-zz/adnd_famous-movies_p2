@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,7 +28,10 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.com.andersonv.famousmovies.BuildConfig;
@@ -91,11 +97,17 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
     @BindView(R.id.pbReview)
     ProgressBar pbReview;
 
+    @BindView(R.id.btFavorite)
+    ImageButton btFavorite;
+
     private Context context;
     private String firstTrailerYouTube;
 
     private TrailerRecyclerViewAdapter trailerAdapter;
     private ReviewRecyclerViewAdapter reviewAdapter;
+
+    private FavoriteEntry favorite;
+    private Movie movie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +128,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
     }
 
     private void populateUI(Intent intent){
-        final Movie movie = intent.getParcelableExtra(Intent.EXTRA_INTENT);
+        movie = intent.getParcelableExtra(Intent.EXTRA_INTENT);
 
         initLoaders(movie.getId());
 
@@ -148,10 +160,13 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
             @Override
             public void onChanged(@Nullable FavoriteEntry favoriteEntry) {
                 if(favoriteEntry != null) {
-                    Log.d(TAG, "Its favorite");
+                    favorite = favoriteEntry;
+
+                    btFavorite.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_favorite_pink_24dp));
                 }else{
-                    Log.d(TAG, "Its not favorite");
+                    btFavorite.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_favorite_border_black_24dp));
                 }
+
             }
         });
     }
@@ -309,9 +324,49 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
                 intent.putExtra(Intent.EXTRA_TEXT, YOUTUBE_URL_SHARE + firstTrailerYouTube);
                 startActivity(Intent.createChooser(intent, getString(R.string.detail_menu_share)));
             }
+            return true;
+        }
+
+        if (item.getItemId() == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
         }
 
         return true;
+    }
+
+    public void onClickFavorite(View view){
+
+        if(favorite == null){
+            //insert
+            Date dateRelease = null;
+            try {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                dateRelease = new Date(format.parse(movie.getReleaseDate()).getTime());
+            }catch (Exception e){
+
+            }
+
+            favorite = new FavoriteEntry(movie.getId(),movie.getTitle(), movie.getPosterPath(), movie.getOverview(), movie.getVoteAverage(), dateRelease, new Date());
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    mDb.favoriteDao().insertFavorite(favorite);
+                }
+            });
+            btFavorite.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_favorite_pink_24dp));
+
+        }else{
+            //delete
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    mDb.favoriteDao().deleteFavorite(favorite);
+
+                }
+            });
+            btFavorite.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_favorite_border_black_24dp));
+        }
     }
 
     @Override
