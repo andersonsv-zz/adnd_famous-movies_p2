@@ -15,35 +15,34 @@ import java.util.List;
 
 import br.com.andersonv.famousmovies.R;
 import br.com.andersonv.famousmovies.data.Movie;
+import br.com.andersonv.famousmovies.database.FavoriteEntry;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecyclerViewAdapter.ViewHolder> {
+public class FavoriteRecyclerViewAdapter extends RecyclerView.Adapter<FavoriteRecyclerViewAdapter.ViewHolder> {
 
     private static final String IMAGE_URL = "http://image.tmdb.org/t/p/w185/";
-    private final List<Movie> mData;
+    private final List<FavoriteEntry> mData;
     private final LayoutInflater mInflater;
-    private final MovieRecyclerOnClickHandler mClickHandler;
 
-    public MovieRecyclerViewAdapter(Context context, List<Movie> data, MovieRecyclerOnClickHandler clickHandler) {
+    public FavoriteRecyclerViewAdapter(Context context, List<FavoriteEntry> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
-        this.mClickHandler = clickHandler;
     }
 
     @Override
     @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.movie_item, parent, false);
+        View view = mInflater.inflate(R.layout.favorite_item, parent, false);
 
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Movie movie = mData.get(position);
+        FavoriteEntry favorite = mData.get(position);
         Picasso.with(mInflater.getContext())
-                .load(IMAGE_URL + movie.getPosterPath())
+                .load(IMAGE_URL + favorite.getPoster())
                 .into(holder.ivMovieImage);
 
     }
@@ -53,11 +52,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
         return mData != null ? mData.size() : 0;
     }
 
-    public interface MovieRecyclerOnClickHandler {
-        void onClick(Movie movie);
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.ivMovieImage)
         ImageView ivMovieImage;
@@ -65,14 +60,6 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            int adapterPosition = getAdapterPosition();
-            Movie movie = mData.get(adapterPosition);
-            mClickHandler.onClick(movie);
         }
     }
 }
