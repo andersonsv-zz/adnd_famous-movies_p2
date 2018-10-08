@@ -51,6 +51,7 @@ public class TrailerRecyclerViewAdapter extends RecyclerView.Adapter<TrailerRecy
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Trailer trailer = mData.get(position);
+        //TODO - colocar os dados em variaveis
 
         holder.tvTrailerTitle.setText(trailer.getName());
 

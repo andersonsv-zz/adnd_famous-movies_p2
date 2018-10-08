@@ -43,6 +43,7 @@ public class ReviewRecyclerViewAdapter extends RecyclerView.Adapter<ReviewRecycl
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Review review = mData.get(position);
 
+        //TODO - colocar os dados em variaveis
         holder.tvReviewAuthor.setText(review.getAuthor());
         holder.tvReviewContent.setText(review.getContent());
     }

@@ -362,9 +362,10 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
                 @Override
                 public void run() {
                     mDb.favoriteDao().deleteFavorite(favorite);
-
+                    favorite = null;
                 }
             });
+
             btFavorite.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_favorite_border_black_24dp));
         }
     }

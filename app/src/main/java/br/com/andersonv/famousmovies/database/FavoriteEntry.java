@@ -36,6 +36,7 @@ public class FavoriteEntry {
 
     public FavoriteEntry(long id, String title, String poster, String overview, Double voteAverage, Date releaseDate, Date createdAt) {
         this.id = id;
+        this.title = title;
         this.poster = poster;
         this.overview = overview;
         this.voteAverage = voteAverage;

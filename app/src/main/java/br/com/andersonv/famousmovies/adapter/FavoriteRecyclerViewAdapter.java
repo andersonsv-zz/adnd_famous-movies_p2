@@ -2,16 +2,22 @@ package br.com.andersonv.famousmovies.adapter;
 
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import br.com.andersonv.famousmovies.R;
 import br.com.andersonv.famousmovies.data.Movie;
@@ -19,46 +25,91 @@ import br.com.andersonv.famousmovies.database.FavoriteEntry;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FavoriteRecyclerViewAdapter extends RecyclerView.Adapter<FavoriteRecyclerViewAdapter.ViewHolder> {
+public class FavoriteRecyclerViewAdapter extends RecyclerView.Adapter<FavoriteRecyclerViewAdapter.FavoriteViewHolder> {
 
+    private static final String DATE_FORMAT = "dd/MM/yyyy";
     private static final String IMAGE_URL = "http://image.tmdb.org/t/p/w185/";
-    private final List<FavoriteEntry> mData;
+
+    private List<FavoriteEntry> mFavoritesEntries;
+    private Context mContext;
     private final LayoutInflater mInflater;
 
-    public FavoriteRecyclerViewAdapter(Context context, List<FavoriteEntry> data) {
+    private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+
+    public FavoriteRecyclerViewAdapter(Context context) {
+        mContext = context;
         this.mInflater = LayoutInflater.from(context);
-        this.mData = data;
     }
 
     @Override
-    @NonNull
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.favorite_item, parent, false);
+    public FavoriteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mContext)
+                .inflate(R.layout.favorite_item, parent, false);
 
-        return new ViewHolder(view);
+
+        return new FavoriteViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        FavoriteEntry favorite = mData.get(position);
+    public void onBindViewHolder(FavoriteViewHolder holder, int position) {
+        FavoriteEntry favoriteEntry = mFavoritesEntries.get(position);
+
         Picasso.with(mInflater.getContext())
-                .load(IMAGE_URL + favorite.getPoster())
+                .load(IMAGE_URL + favoriteEntry.getPoster())
                 .into(holder.ivMovieImage);
 
+        String title = favoriteEntry.getTitle();
+        String overview = favoriteEntry.getOverview();
+        String voteAverage = favoriteEntry.getVoteAverage().toString();
+
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        String releaseDate = sdf.format(favoriteEntry.getReleaseDate());
+
+        holder.tvTitle.setText(title);
+        holder.tvOverview.setText(overview);
+        holder.tvVoteAverage.setText(voteAverage);
+        holder.tvReleaseDate.setText(releaseDate);
     }
 
     @Override
     public int getItemCount() {
-        return mData != null ? mData.size() : 0;
+        if (mFavoritesEntries == null) {
+            return 0;
+        }
+        return mFavoritesEntries.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public List<FavoriteEntry> getFavorites() {
+        return mFavoritesEntries;
+    }
+
+
+    public void setFavorites(List<FavoriteEntry> favoritesEntries) {
+        mFavoritesEntries = favoritesEntries;
+        notifyDataSetChanged();
+    }
+
+
+    class FavoriteViewHolder extends RecyclerView.ViewHolder  {
 
         @BindView(R.id.ivMovieImage)
         ImageView ivMovieImage;
 
-        ViewHolder(View itemView) {
+        @BindView(R.id.tvTitle)
+        TextView tvTitle;
+
+        @BindView(R.id.tvOverview)
+        TextView tvOverview;
+
+        @BindView(R.id.tvVoteAverage)
+        TextView tvVoteAverage;
+
+        @BindView(R.id.tvReleaseDate)
+        TextView tvReleaseDate;
+
+        public FavoriteViewHolder(View itemView) {
             super(itemView);
+
             ButterKnife.bind(this, itemView);
         }
     }
