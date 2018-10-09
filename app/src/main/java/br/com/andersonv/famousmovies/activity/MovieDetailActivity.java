@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ import br.com.andersonv.famousmovies.database.FavoriteEntry;
 import br.com.andersonv.famousmovies.network.MovieService;
 import br.com.andersonv.famousmovies.network.RetrofitClientInstance;
 import br.com.andersonv.famousmovies.tasks.AppExecutors;
+import br.com.andersonv.famousmovies.util.DateUtil;
 import br.com.andersonv.famousmovies.util.GradientTransformation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -148,11 +150,13 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
         //format and get data
         String title = movie.getTitle();
 
-        String releaseDate = movie.getReleaseDate();
+        Date releaseDate =  DateUtil.convertStringToDate(movie.getReleaseDate(), "yyyy-MM-dd");
+        String releaseDateFmt = DateFormat.getDateInstance(DateFormat.MEDIUM).format(releaseDate);
+
         String voteAverage = MessageFormat.format("{0, number,#.##}/10", movie.getVoteAverage());
 
         mTitle.setText(title);
-        mRelease.setText(releaseDate);
+        mRelease.setText(releaseDateFmt);
         mVoteAverage.setText(voteAverage);
         mOverview.setText(movie.getOverview());
 
@@ -208,10 +212,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
                     call = service.getTrailers(movieId, BuildConfig.API_MOVIE_DB_KEY);
 
                     try {
-                        if (null != call.execute().body()){
-                            return call.execute().body().getTrailers();
-                        }
-                        return null;
+                        return call.execute().body().getTrailers();
                     } catch (Exception e) {
                         e.printStackTrace();
                         return null;
@@ -279,10 +280,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
                     call = service.getReviews(movieId, BuildConfig.API_MOVIE_DB_KEY);
 
                     try {
-                        if(null != call.execute().body()) {
-                            return call.execute().body().getReviews();
-                        }
-                        return null;
+                        return call.execute().body().getReviews();
                     } catch (Exception e) {
                         e.printStackTrace();
                         return null;
@@ -352,16 +350,11 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
     public void onClickFavorite(View view){
 
         if(favorite == null){
+
             //insert
-            Date dateRelease = null;
-            try {
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                dateRelease = new Date(format.parse(movie.getReleaseDate()).getTime());
-            }catch (Exception e){
+            Date releaseDate =  DateUtil.convertStringToDate(movie.getReleaseDate(), "yyyy-MM-dd");
 
-            }
-
-            favorite = new FavoriteEntry(movie.getId(),movie.getTitle(), movie.getPosterPath(), movie.getOverview(), movie.getVoteAverage(), dateRelease, new Date());
+            favorite = new FavoriteEntry(movie.getId(),movie.getTitle(), movie.getPosterPath(), movie.getOverview(), movie.getVoteAverage(), releaseDate, new Date());
             AppExecutors.getInstance().diskIO().execute(new Runnable() {
                 @Override
                 public void run() {

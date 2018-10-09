@@ -2,6 +2,8 @@ package br.com.andersonv.famousmovies.activity;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -62,6 +64,14 @@ public class FavoriteActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
+
+            Context context = this;
+            Class destinationClass = MovieActivity.class;
+
+            Intent intent = new Intent(context, destinationClass);
+
+            startActivity(intent);
+
             return true;
         }
         return super.onOptionsItemSelected(item);

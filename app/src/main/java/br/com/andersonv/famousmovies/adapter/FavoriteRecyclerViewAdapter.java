@@ -24,14 +24,11 @@ import butterknife.ButterKnife;
 
 public class FavoriteRecyclerViewAdapter extends RecyclerView.Adapter<FavoriteRecyclerViewAdapter.FavoriteViewHolder> {
 
-    private static final String DATE_FORMAT = "dd/MM/yyyy";
     private static final String IMAGE_URL = "http://image.tmdb.org/t/p/w185/";
 
     private List<FavoriteEntry> mFavoritesEntries;
     private final Context mContext;
     private final LayoutInflater mInflater;
-
-    private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
 
     public FavoriteRecyclerViewAdapter(Context context) {
         mContext = context;
