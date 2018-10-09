@@ -20,4 +20,6 @@
     <string name="detail_subtitle_overview">Overview</string>
     <string name="detail_subtitle_reviews">Reviews</string>
     <string name="detail_subtitle_trailers">Trailers</string>
+
+    <string name="content_description_img_ivTrailer">Trailer image</string>
 </resources>

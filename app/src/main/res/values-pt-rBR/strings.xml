@@ -23,5 +23,5 @@
     <string name="detail_subtitle_reviews">Críticas</string>
     <string name="detail_subtitle_trailers">Vídeos</string>
 
-
+    <string name="content_description_img_ivTrailer">Imagem do trailer</string>
 </resources>

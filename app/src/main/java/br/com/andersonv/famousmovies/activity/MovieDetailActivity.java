@@ -104,8 +104,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
     private Context context;
     private String firstTrailerYouTube;
 
-    private ReviewRecyclerViewAdapter reviewAdapter;
-
     private FavoriteEntry favorite;
     private Movie movie;
 
@@ -210,7 +208,10 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
                     call = service.getTrailers(movieId, BuildConfig.API_MOVIE_DB_KEY);
 
                     try {
-                        return call.execute().body().getTrailers();
+                        if (null != call.execute().body()){
+                            return call.execute().body().getTrailers();
+                        }
+                        return null;
                     } catch (Exception e) {
                         e.printStackTrace();
                         return null;
@@ -278,7 +279,10 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
                     call = service.getReviews(movieId, BuildConfig.API_MOVIE_DB_KEY);
 
                     try {
-                        return call.execute().body().getReviews();
+                        if(null != call.execute().body()) {
+                            return call.execute().body().getReviews();
+                        }
+                        return null;
                     } catch (Exception e) {
                         e.printStackTrace();
                         return null;
@@ -304,7 +308,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
                 mReviews.setLayoutManager(linearLayoutManager);
 
-                reviewAdapter = new ReviewRecyclerViewAdapter(context, data);
+                ReviewRecyclerViewAdapter reviewAdapter = new ReviewRecyclerViewAdapter(context, data);
                 mReviews.setAdapter(reviewAdapter);
                 mReviews.setVisibility(View.VISIBLE);
 

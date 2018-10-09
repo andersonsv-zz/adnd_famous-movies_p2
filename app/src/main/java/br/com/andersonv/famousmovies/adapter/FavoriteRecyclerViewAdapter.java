@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -27,7 +28,7 @@ public class FavoriteRecyclerViewAdapter extends RecyclerView.Adapter<FavoriteRe
     private static final String IMAGE_URL = "http://image.tmdb.org/t/p/w185/";
 
     private List<FavoriteEntry> mFavoritesEntries;
-    private Context mContext;
+    private final Context mContext;
     private final LayoutInflater mInflater;
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
@@ -58,8 +59,7 @@ public class FavoriteRecyclerViewAdapter extends RecyclerView.Adapter<FavoriteRe
         String overview = favoriteEntry.getOverview();
         String voteAverage = MessageFormat.format("{0, number,#.##}/10", favoriteEntry.getVoteAverage());
 
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-        String releaseDate = sdf.format(favoriteEntry.getReleaseDate());
+        String releaseDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(favoriteEntry.getReleaseDate());
 
         holder.tvTitle.setText(title);
         holder.tvOverview.setText(overview);

@@ -21,10 +21,20 @@
         <item name="android:layout_marginTop">8dp</item>
     </style>
 
-    <style name="VoteAverage" parent="AppTheme">
+    <style name="VoteAverage.80" parent="AppTheme">
         <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Large</item>
         <item name="android:layout_height">80dp</item>
         <item name="android:layout_width">80dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:background">@drawable/vote_average_circle</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+    </style>
+
+    <style name="VoteAverage.60" parent="AppTheme">
+        <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Small</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_width">60dp</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:layout_marginRight">16dp</item>
         <item name="android:background">@drawable/vote_average_circle</item>

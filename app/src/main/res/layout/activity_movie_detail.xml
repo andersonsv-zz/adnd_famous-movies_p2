@@ -62,7 +62,7 @@
 
         <TextView
             android:id="@+id/tvVoteAverage"
-            style="@style/VoteAverage"
+            style="@style/VoteAverage.80"
             app:layout_constraintBottom_toBottomOf="@+id/btFavorite"
             app:layout_constraintEnd_toEndOf="parent" />
 
