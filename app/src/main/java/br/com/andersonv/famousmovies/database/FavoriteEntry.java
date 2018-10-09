@@ -12,7 +12,7 @@ public class FavoriteEntry {
 
     @PrimaryKey
     private long id;
-    private String title;
+    private final String title;
     private String poster;
     private String overview;
     @ColumnInfo(name = "vote_average")
