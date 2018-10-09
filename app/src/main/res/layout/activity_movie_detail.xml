@@ -15,10 +15,7 @@
         <!-- image of movies -->
         <ImageView
             android:id="@+id/ivBackdrop"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:contentDescription="@string/content_description_img_ivBackdrop"
-            android:scaleType="centerCrop"
+            style="@style/Backdrop.Portrait"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -27,35 +24,21 @@
         <ImageView
             android:id="@+id/ivPoster"
             style="@style/Poster"
-            android:contentDescription="@string/content_description_img_ivPoster"
             app:layout_constraintStart_toStartOf="@+id/ivBackdrop"
             app:layout_constraintTop_toBottomOf="@+id/ivBackdrop" />
 
         <TextView
             android:id="@+id/tvTitle"
-            style="@style/Base.TextAppearance.AppCompat.Headline"
+            style="@style/DetailTitle"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivPoster"
             app:layout_constraintTop_toBottomOf="@+id/ivBackdrop" />
 
         <TextView
             android:id="@+id/tvRelease"
-            style="@style/WhiteText"
+            style="@style/DetailDateRelease"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display3"
             app:layout_constraintStart_toEndOf="@+id/ivPoster"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
@@ -68,16 +51,8 @@
 
         <TextView
             android:id="@+id/tvOverview"
-            style="@style/Base.TextAppearance.AppCompat.Small"
+            style="@style/DetailOverview"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -99,69 +74,40 @@
 
         <ProgressBar
             android:id="@+id/pbTrailer"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
+            style="@style/DetailProgressBar"
             app:layout_constraintBottom_toBottomOf="@+id/rvTrailers"
             app:layout_constraintEnd_toEndOf="@+id/rvTrailers"
             app:layout_constraintStart_toStartOf="@+id/rvTrailers"
-            app:layout_constraintTop_toTopOf="@+id/rvTrailers"
-            tools:visibility="invisible" />
+            app:layout_constraintTop_toTopOf="@+id/rvTrailers" />
 
         <ProgressBar
             android:id="@+id/pbReview"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
+            style="@style/DetailProgressBar"
             app:layout_constraintBottom_toBottomOf="@+id/rvReviews"
             app:layout_constraintEnd_toEndOf="@+id/rvReviews"
             app:layout_constraintStart_toStartOf="@+id/rvReviews"
-            app:layout_constraintTop_toTopOf="@+id/rvReviews"
-            tools:visibility="invisible" />
+            app:layout_constraintTop_toTopOf="@+id/rvReviews" />
 
         <TextView
             android:id="@+id/tvOverViewSubtitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            style="@style/DetailSubtitle"
             android:text="@string/detail_subtitle_overview"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivPoster" />
 
         <TextView
             android:id="@+id/tvTrailerSubtitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            style="@style/DetailSubtitle"
             android:text="@string/detail_subtitle_trailers"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvOverview" />
 
         <TextView
             android:id="@+id/textView7"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            style="@style/DetailSubtitle"
             android:text="@string/detail_subtitle_reviews"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rvTrailers" />
@@ -218,8 +164,5 @@
             app:layout_constraintStart_toStartOf="@+id/textView7"
             app:layout_constraintTop_toTopOf="@+id/rvReviews" />
 
-
     </android.support.constraint.ConstraintLayout>
-
-
 </ScrollView>

@@ -177,15 +177,9 @@ public class MovieActivity extends AppCompatActivity implements MovieRecyclerVie
                 bundleForLoader.putInt(Intent.EXTRA_KEY_EVENT, movieSearch.ordinal());
             }
 
-            /*
-             * Ensures a loader is initialized and active. If the loader doesn't already exist, one is
-             * created and (if the activity/fragment is currently started) starts the loader. Otherwise
-             * the last created loader is re-used.
-             */
             LoaderManager.LoaderCallbacks<List<Movie>> callback = MovieActivity.this;
 
             getSupportLoaderManager().restartLoader(MOVIE_LOADER_ID, bundleForLoader, callback);
-
         }
     }
 

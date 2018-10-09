@@ -18,6 +18,7 @@
         <item name="android:layout_marginLeft">8dp</item>
         <item name="android:layout_marginRight">8dp</item>
         <item name="android:layout_marginTop">8dp</item>
+        <item name="android:contentDescription">@string/content_description_img_ivPoster</item>
     </style>
 
     <style name="VoteAverage.80" parent="AppTheme">
@@ -39,6 +40,55 @@
         <item name="android:layout_marginRight">16dp</item>
         <item name="android:background">@drawable/vote_average_circle</item>
         <item name="android:gravity">center_vertical|center_horizontal</item>
+    </style>
+
+    <style name="Backdrop">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:contentDescription">@string/content_description_img_ivBackdrop</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="Backdrop.Portrait" parent="Backdrop">
+        <item name="android:layout_height">200dp</item>
+    </style>
+
+    <style name="Backdrop.Landscape" parent="Backdrop">
+        <item name="android:layout_height">150dp</item>
+    </style>
+
+
+    <style name="DetailTitle" parent="@style/TextAppearance.AppCompat.Small.Inverse">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+    </style>
+
+    <style name="DetailDateRelease" parent="Base.TextAppearance.AppCompat.Small.Inverse">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+
+    <style name="DetailOverview" parent="Base.TextAppearance.AppCompat.Small.Inverse">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+    </style>
+
+    <style name="DetailSubtitle" parent="TextAppearance.AppCompat.Large">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+
+    <style name="DetailProgressBar" parent="ProgressBar">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:visibility">invisible</item>
     </style>
 
     <style name="WhiteText" parent="@android:style/TextAppearance">
