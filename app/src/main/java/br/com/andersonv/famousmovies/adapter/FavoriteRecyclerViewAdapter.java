@@ -13,9 +13,7 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 import br.com.andersonv.famousmovies.R;
 import br.com.andersonv.famousmovies.database.FavoriteEntry;

@@ -172,7 +172,10 @@ public class MovieActivity extends AppCompatActivity implements MovieRecyclerVie
             mLoadingIndicator.setVisibility(View.VISIBLE);
 
             Bundle bundleForLoader = new Bundle();
-            bundleForLoader.putInt(Intent.EXTRA_KEY_EVENT, movieSearch.ordinal());
+
+            if(movieSearch != null){
+                bundleForLoader.putInt(Intent.EXTRA_KEY_EVENT, movieSearch.ordinal());
+            }
 
             /*
              * Ensures a loader is initialized and active. If the loader doesn't already exist, one is
