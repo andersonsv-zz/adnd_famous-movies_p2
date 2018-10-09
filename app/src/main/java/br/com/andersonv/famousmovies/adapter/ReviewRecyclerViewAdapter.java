@@ -7,17 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
-import java.text.MessageFormat;
 import java.util.List;
 
 import br.com.andersonv.famousmovies.R;
 import br.com.andersonv.famousmovies.data.Review;
-import br.com.andersonv.famousmovies.data.Trailer;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -43,15 +38,17 @@ public class ReviewRecyclerViewAdapter extends RecyclerView.Adapter<ReviewRecycl
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Review review = mData.get(position);
 
-        //TODO - colocar os dados em variaveis
-        holder.tvReviewAuthor.setText(review.getAuthor());
-        holder.tvReviewContent.setText(review.getContent());
+        String author = review.getAuthor();
+        String content = review.getContent();
+
+        holder.tvReviewAuthor.setText(author);
+        holder.tvReviewContent.setText(content);
     }
 
     @Override
     public int getItemCount() { return mData != null ? mData.size() : 0; }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tvReviewAuthor)
         TextView tvReviewAuthor;

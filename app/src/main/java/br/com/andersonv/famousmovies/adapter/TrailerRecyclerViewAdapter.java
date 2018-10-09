@@ -16,8 +16,6 @@ import java.text.MessageFormat;
 import java.util.List;
 
 import br.com.andersonv.famousmovies.R;
-import br.com.andersonv.famousmovies.activity.MovieDetailActivity;
-import br.com.andersonv.famousmovies.data.Movie;
 import br.com.andersonv.famousmovies.data.Trailer;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,11 +49,13 @@ public class TrailerRecyclerViewAdapter extends RecyclerView.Adapter<TrailerRecy
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Trailer trailer = mData.get(position);
-        //TODO - colocar os dados em variaveis
 
-        holder.tvTrailerTitle.setText(trailer.getName());
+        String name = trailer.getName();
+        String key = trailer.getKey();
 
-        String imageThumb = MessageFormat.format(IMAGE_YOUTUBE_DEFAULT_THUMB, trailer.getKey());
+        holder.tvTrailerTitle.setText(name);
+
+        String imageThumb = MessageFormat.format(IMAGE_YOUTUBE_DEFAULT_THUMB, key);
 
         Picasso.with(mInflater.getContext())
                 .load(imageThumb)
@@ -69,7 +69,7 @@ public class TrailerRecyclerViewAdapter extends RecyclerView.Adapter<TrailerRecy
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         @BindView(R.id.ivThumbVideo)
         ImageView ivThumbVideo;

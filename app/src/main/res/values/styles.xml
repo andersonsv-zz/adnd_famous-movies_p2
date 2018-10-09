@@ -12,6 +12,25 @@
     </style>
 
 
+    <style name="Poster" parent="AppTheme">
+        <item name="android:layout_width">90dp</item>
+        <item name="android:layout_height">140dp</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+    </style>
+
+    <style name="VoteAverage" parent="AppTheme">
+        <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Large</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:layout_width">80dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:background">@drawable/vote_average_circle</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+    </style>
+
     <style name="WhiteText" parent="@android:style/TextAppearance">
         <item name="android:textColor">#ffffff</item>
     </style>

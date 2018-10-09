@@ -2,9 +2,6 @@ package br.com.andersonv.famousmovies.adapter;
 
 
 import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +11,12 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.text.DateFormat;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
 import br.com.andersonv.famousmovies.R;
-import br.com.andersonv.famousmovies.data.Movie;
 import br.com.andersonv.famousmovies.database.FavoriteEntry;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,7 +56,7 @@ public class FavoriteRecyclerViewAdapter extends RecyclerView.Adapter<FavoriteRe
 
         String title = favoriteEntry.getTitle();
         String overview = favoriteEntry.getOverview();
-        String voteAverage = favoriteEntry.getVoteAverage().toString();
+        String voteAverage = MessageFormat.format("{0, number,#.##}/10", favoriteEntry.getVoteAverage());
 
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
         String releaseDate = sdf.format(favoriteEntry.getReleaseDate());
