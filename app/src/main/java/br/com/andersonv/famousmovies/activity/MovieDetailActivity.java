@@ -14,12 +14,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -29,10 +31,12 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
 import java.text.DateFormat;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import br.com.andersonv.famousmovies.BuildConfig;
 import br.com.andersonv.famousmovies.R;
@@ -53,6 +57,8 @@ import br.com.andersonv.famousmovies.util.GradientTransformation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
+
+import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
 
 public class MovieDetailActivity extends AppCompatActivity implements TrailerRecyclerViewAdapter.TrailerRecyclerOnClickHandler {
@@ -76,34 +82,33 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
     private AppDatabase mDb;
 
     @BindView(R.id.ivBackdrop)
-    ImageView ivBackdrop;
+    ImageView mBackdrop;
     @BindView(R.id.ivPoster)
-    ImageView ivPoster;
+    ImageView mPoster;
 
     @BindView(R.id.tvTitle)
-    TextView tvTitle;
+    TextView mTitle;
     @BindView(R.id.tvRelease)
-    TextView tvRelease;
+    TextView mRelease;
     @BindView(R.id.tvVoteAverage)
-    TextView tvVoteAverage;
+    TextView mVoteAverage;
     @BindView(R.id.tvOverview)
-    TextView tvOverview;
+    TextView mOverview;
     @BindView(R.id.rvTrailers)
-    RecyclerView rvTrailers;
+    RecyclerView mTrailers;
     @BindView(R.id.rvReviews)
-    RecyclerView rvReviews;
+    RecyclerView mReviews;
     @BindView(R.id.pbTrailer)
     ProgressBar pbTrailer;
     @BindView(R.id.pbReview)
     ProgressBar pbReview;
 
     @BindView(R.id.btFavorite)
-    ImageButton btFavorite;
+    Button btFavorite;
 
     private Context context;
     private String firstTrailerYouTube;
 
-    private TrailerRecyclerViewAdapter trailerAdapter;
     private ReviewRecyclerViewAdapter reviewAdapter;
 
     private FavoriteEntry favorite;
@@ -136,22 +141,29 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
 
         transformations.add(new GradientTransformation());
 
+        //backdrop
         Picasso.with(this)
                 .load(IMAGE_BACKDROP_URL + movie.getBackdropPath())
                 .transform(transformations)
-                .into(ivBackdrop);
+                .into(mBackdrop);
 
+        //poster
         Picasso.with(this)
                 .load(IMAGE_URL + movie.getPosterPath())
-                .into(ivPoster);
+                .into(mPoster);
 
-        tvTitle.setText(movie.getTitle());
-        this.setTitle(movie.getTitle());
+        //format and get data
+        String title = movie.getTitle();
 
-        tvRelease.setText(movie.getReleaseDate());
-        tvVoteAverage.setText(String.valueOf(movie.getVoteAverage()));
-        tvOverview.setText(movie.getOverview());
+        String releaseDate = movie.getReleaseDate();
+        String voteAverage = MessageFormat.format("{0, number,#.##}/10", movie.getVoteAverage());
 
+        mTitle.setText(title);
+        mRelease.setText(releaseDate);
+        mVoteAverage.setText(voteAverage);
+        mOverview.setText(movie.getOverview());
+
+        //get favorite
         MovieViewModelFactory factory = new MovieViewModelFactory(mDb, movie.getId());
 
         final MovieViewModel viewModel = ViewModelProviders.of(this, factory).get(MovieViewModel.class);
@@ -162,9 +174,9 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
                 if(favoriteEntry != null) {
                     favorite = favoriteEntry;
 
-                    btFavorite.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_favorite_pink_24dp));
+                    btFavorite.setBackgroundResource(R.drawable.ic_favorite_pink_24dp);
                 }else{
-                    btFavorite.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_favorite_border_black_24dp));
+                    btFavorite.setBackgroundResource(R.drawable.ic_favorite_border_black_24dp);
                 }
 
             }
@@ -227,15 +239,18 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
 
                 Log.d(TAG, "Trailers: " + data.size());
 
-                rvTrailers.setFocusable(false);
+                mTrailers.setFocusable(false);
 
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-                rvTrailers.setLayoutManager(linearLayoutManager);
+                mTrailers.setLayoutManager(linearLayoutManager);
 
-                trailerAdapter = new TrailerRecyclerViewAdapter(context, data, MovieDetailActivity.this);
+                TrailerRecyclerViewAdapter trailerAdapter = new TrailerRecyclerViewAdapter(context, data, MovieDetailActivity.this);
 
-                rvTrailers.setAdapter(trailerAdapter);
-                rvTrailers.setVisibility(View.VISIBLE);
+                DividerItemDecoration decoration = new DividerItemDecoration(getApplicationContext(), VERTICAL);
+                mTrailers.addItemDecoration(decoration);
+
+                mTrailers.setAdapter(trailerAdapter);
+                mTrailers.setVisibility(View.VISIBLE);
 
                 pbTrailer.setVisibility(View.INVISIBLE);
 
@@ -289,14 +304,14 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
 
                 Log.d(TAG, "Reviews: " + data.size());
 
-                rvReviews.setFocusable(false);
+                mReviews.setFocusable(false);
 
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-                rvReviews.setLayoutManager(linearLayoutManager);
+                mReviews.setLayoutManager(linearLayoutManager);
 
                 reviewAdapter = new ReviewRecyclerViewAdapter(context, data);
-                rvReviews.setAdapter(reviewAdapter);
-                rvReviews.setVisibility(View.VISIBLE);
+                mReviews.setAdapter(reviewAdapter);
+                mReviews.setVisibility(View.VISIBLE);
 
                 pbReview.setVisibility(View.INVISIBLE);
 
@@ -354,7 +369,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
                     mDb.favoriteDao().insertFavorite(favorite);
                 }
             });
-            btFavorite.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_favorite_pink_24dp));
+            btFavorite.setBackgroundResource(R.drawable.ic_favorite_pink_24dp);
 
         }else{
             //delete
@@ -366,7 +381,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
                 }
             });
 
-            btFavorite.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_favorite_border_black_24dp));
+            btFavorite.setBackgroundResource(R.drawable.ic_favorite_border_black_24dp);
         }
     }
 

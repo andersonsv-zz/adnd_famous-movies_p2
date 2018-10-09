@@ -179,10 +179,9 @@ public class MovieActivity extends AppCompatActivity implements MovieRecyclerVie
              * created and (if the activity/fragment is currently started) starts the loader. Otherwise
              * the last created loader is re-used.
              */
-            int loaderId = MOVIE_LOADER_ID;
             LoaderManager.LoaderCallbacks<List<Movie>> callback = MovieActivity.this;
 
-            getSupportLoaderManager().restartLoader(loaderId, bundleForLoader, callback);
+            getSupportLoaderManager().restartLoader(MOVIE_LOADER_ID, bundleForLoader, callback);
 
         }
     }

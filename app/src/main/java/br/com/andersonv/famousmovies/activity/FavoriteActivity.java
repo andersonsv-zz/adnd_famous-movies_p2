@@ -2,10 +2,8 @@ package br.com.andersonv.famousmovies.activity;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +15,6 @@ import java.util.List;
 
 import br.com.andersonv.famousmovies.R;
 import br.com.andersonv.famousmovies.adapter.FavoriteRecyclerViewAdapter;
-import br.com.andersonv.famousmovies.database.AppDatabase;
 import br.com.andersonv.famousmovies.database.FavoriteEntry;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,8 +22,6 @@ import butterknife.ButterKnife;
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
 public class FavoriteActivity extends AppCompatActivity {
-
-    private AppDatabase mDb;
 
     private FavoriteRecyclerViewAdapter mFavoriteAdapter;
 
@@ -41,8 +36,6 @@ public class FavoriteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_favorite);
 
         ButterKnife.bind(this);
-
-        mDb = AppDatabase.getInstance(getApplicationContext());
 
         mRecycleView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -69,7 +62,6 @@ public class FavoriteActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-
             return true;
         }
         return super.onOptionsItemSelected(item);

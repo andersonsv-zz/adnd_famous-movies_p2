@@ -107,7 +107,7 @@ public class FavoriteRecyclerViewAdapter extends RecyclerView.Adapter<FavoriteRe
         @BindView(R.id.tvReleaseDate)
         TextView tvReleaseDate;
 
-        public FavoriteViewHolder(View itemView) {
+        FavoriteViewHolder(View itemView) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);

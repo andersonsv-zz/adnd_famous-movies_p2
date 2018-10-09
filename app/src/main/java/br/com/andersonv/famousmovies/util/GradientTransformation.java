@@ -11,7 +11,7 @@ import com.squareup.picasso.Transformation;
 
 public class GradientTransformation implements Transformation {
 
-    int startColor = Color.argb(255,0,0,0);
+    private int startColor = Color.argb(255,0,0,0);
     int endColor = Color.TRANSPARENT;
 
     @Override public Bitmap transform(Bitmap source) {
