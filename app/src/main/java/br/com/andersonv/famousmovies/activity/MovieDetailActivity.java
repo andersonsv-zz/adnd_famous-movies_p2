@@ -99,7 +99,10 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
     ProgressBar pbTrailer;
     @BindView(R.id.pbReview)
     ProgressBar pbReview;
-
+    @BindView(R.id.tvNfDataReview)
+    TextView mNfDataReview;
+    @BindView(R.id.tvNfDataTrailer)
+    TextView mNfDataTrailer;
     @BindView(R.id.btFavorite)
     Button btFavorite;
 
@@ -233,7 +236,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
             if (data != null && !data.isEmpty()) {
 
                 firstTrailerYouTube = data.iterator().next().getKey();
-
+                mNfDataTrailer.setVisibility(View.INVISIBLE);
                 Log.d(TAG, "Trailers: " + data.size());
 
                 mTrailers.setFocusable(false);
@@ -252,9 +255,8 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
                 pbTrailer.setVisibility(View.INVISIBLE);
 
             } else {
-                //TODO - incluir mensagem de erro se não houver filmes
-               // reviewsLv.setVisibility(View.GONE);
-               // reviewsLabelTv.setVisibility(View.GONE);
+                pbTrailer.setVisibility(View.INVISIBLE);
+                mNfDataTrailer.setVisibility(View.VISIBLE);
             }
         }
 
@@ -298,7 +300,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
         @Override
         public void onLoadFinished(android.content.Loader<List<Review>> loader, List<Review> data) {
             if (data != null && !data.isEmpty()) {
-
+                mNfDataReview.setVisibility(View.INVISIBLE);
                 Log.d(TAG, "Reviews: " + data.size());
 
                 mReviews.setFocusable(false);
@@ -313,8 +315,8 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
                 pbReview.setVisibility(View.INVISIBLE);
 
             } else {
-                // reviewsLv.setVisibility(View.GONE);
-                // reviewsLabelTv.setVisibility(View.GONE);
+                pbReview.setVisibility(View.INVISIBLE);
+                mNfDataReview.setVisibility(View.VISIBLE);
             }
         }
 

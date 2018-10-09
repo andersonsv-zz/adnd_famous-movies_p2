@@ -193,6 +193,31 @@
             app:layout_constraintBottom_toBottomOf="@+id/ivPoster"
             app:layout_constraintStart_toEndOf="@+id/ivPoster" />
 
+        <TextView
+            android:id="@+id/tvNfDataTrailer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/detail_data_not_found"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@+id/tvTrailerSubtitle"
+            app:layout_constraintStart_toStartOf="@+id/tvTrailerSubtitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvTrailerSubtitle" />
+
+        <TextView
+            android:id="@+id/tvNfDataReview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/detail_data_not_found"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@+id/textView7"
+            app:layout_constraintStart_toStartOf="@+id/textView7"
+            app:layout_constraintTop_toTopOf="@+id/rvReviews" />
+
 
     </android.support.constraint.ConstraintLayout>
 
