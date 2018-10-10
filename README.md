@@ -4,7 +4,6 @@ Versão do  Documento - 1.0
 
 # Revisões:
 ------
-|
 
 1 - 09/10/2018 - Primeiro envio
  
