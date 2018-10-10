@@ -43,15 +43,16 @@
 
     <style name="Backdrop">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:scaleType">centerCrop</item>
     </style>
 
     <style name="Backdrop.Portrait" parent="Backdrop">
         <item name="android:layout_height">200dp</item>
+        <item name="android:scaleType">centerCrop</item>
     </style>
 
     <style name="Backdrop.Landscape" parent="Backdrop">
-        <item name="android:layout_height">150dp</item>
+        <item name="android:layout_height">200dp</item>
+        <item name="android:scaleType">centerCrop</item>
     </style>
 
 
@@ -62,7 +63,20 @@
         <item name="android:layout_marginRight">8dp</item>
     </style>
 
+    <style name="DetailTitle.Landscape" parent="@style/TextAppearance.AppCompat.Large.Inverse">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+    </style>
+
     <style name="DetailDateRelease" parent="Base.TextAppearance.AppCompat.Small.Inverse">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+
+    <style name="DetailDateRelease.Landscape" parent="Base.TextAppearance.AppCompat.Large.Inverse">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">8dp</item>
         <item name="android:layout_marginTop">16dp</item>
