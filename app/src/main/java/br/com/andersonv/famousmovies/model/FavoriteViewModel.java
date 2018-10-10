@@ -14,7 +14,7 @@ public class FavoriteViewModel extends AndroidViewModel {
 
     private static final String TAG = FavoriteViewModel.class.getSimpleName();
 
-    private LiveData<List<FavoriteEntry>> favorites;
+    private final LiveData<List<FavoriteEntry>> favorites;
 
     public FavoriteViewModel(Application application) {
         super(application);

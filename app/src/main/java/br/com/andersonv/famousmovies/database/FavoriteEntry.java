@@ -13,7 +13,7 @@ public class FavoriteEntry {
     @PrimaryKey
     private long id;
     private final String title;
-    private String poster;
+    private final String poster;
     private String overview;
     @ColumnInfo(name = "vote_average")
     private Double voteAverage;

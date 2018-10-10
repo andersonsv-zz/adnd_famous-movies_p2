@@ -200,7 +200,7 @@ public class MovieActivity extends AppCompatActivity implements MovieRecyclerVie
     public Loader<List<Movie>> onCreateLoader(int id, final @Nullable Bundle args) {
         return new AsyncTaskLoader<List<Movie>>(this) {
 
-            List<Movie> mMovie = null;
+            final List<Movie> mMovie = null;
 
             @Override
             protected void onStartLoading() {

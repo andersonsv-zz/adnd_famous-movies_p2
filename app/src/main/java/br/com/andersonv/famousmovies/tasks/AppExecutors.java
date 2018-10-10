@@ -60,13 +60,14 @@ public class AppExecutors {
         return diskIO;
     }
 
-    public Executor mainThread() {
+
+   /* public Executor mainThread() {
         return mainThread;
     }
 
     public Executor networkIO() {
         return networkIO;
-    }
+    }*/
 
     private static class MainThreadExecutor implements Executor {
         private final Handler mainThreadHandler = new Handler(Looper.getMainLooper());

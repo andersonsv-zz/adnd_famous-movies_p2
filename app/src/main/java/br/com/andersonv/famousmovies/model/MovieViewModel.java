@@ -10,7 +10,7 @@ public class MovieViewModel extends ViewModel {
 
     private static final String TAG = MovieViewModel.class.getSimpleName();
 
-    private LiveData<FavoriteEntry> favorite;
+    private final LiveData<FavoriteEntry> favorite;
 
     public MovieViewModel(AppDatabase database, Long movieId) {
         favorite = database.favoriteDao().loadFavoriteById(movieId);

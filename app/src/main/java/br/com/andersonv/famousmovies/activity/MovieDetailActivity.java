@@ -200,7 +200,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerRec
 
     }
 
-    private LoaderManager.LoaderCallbacks trailerLoaderCallbacks = new LoaderManager.LoaderCallbacks<List<Trailer>>() {
+    private final LoaderManager.LoaderCallbacks trailerLoaderCallbacks = new LoaderManager.LoaderCallbacks<List<Trailer>>() {
 
         @Override
         public android.content.Loader<List<Trailer>> onCreateLoader(int id, final Bundle args) {
