@@ -45,6 +45,8 @@ import br.com.andersonv.famousmovies.data.Trailer;
 import br.com.andersonv.famousmovies.data.Trailers;
 import br.com.andersonv.famousmovies.database.AppDatabase;
 import br.com.andersonv.famousmovies.database.FavoriteEntry;
+import br.com.andersonv.famousmovies.model.MovieViewModel;
+import br.com.andersonv.famousmovies.model.MovieViewModelFactory;
 import br.com.andersonv.famousmovies.network.MovieService;
 import br.com.andersonv.famousmovies.network.RetrofitClientInstance;
 import br.com.andersonv.famousmovies.tasks.AppExecutors;

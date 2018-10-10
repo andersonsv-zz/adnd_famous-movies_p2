@@ -1,4 +1,4 @@
-package br.com.andersonv.famousmovies.activity;
+package br.com.andersonv.famousmovies.model;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
@@ -6,7 +6,7 @@ import android.arch.lifecycle.ViewModel;
 import br.com.andersonv.famousmovies.database.AppDatabase;
 import br.com.andersonv.famousmovies.database.FavoriteEntry;
 
-class MovieViewModel extends ViewModel {
+public class MovieViewModel extends ViewModel {
 
     private static final String TAG = MovieViewModel.class.getSimpleName();
 

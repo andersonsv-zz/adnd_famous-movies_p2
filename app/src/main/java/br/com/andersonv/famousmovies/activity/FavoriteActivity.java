@@ -18,6 +18,7 @@ import java.util.List;
 import br.com.andersonv.famousmovies.R;
 import br.com.andersonv.famousmovies.adapter.FavoriteRecyclerViewAdapter;
 import br.com.andersonv.famousmovies.database.FavoriteEntry;
+import br.com.andersonv.famousmovies.model.FavoriteViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

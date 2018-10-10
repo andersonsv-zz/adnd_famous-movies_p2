@@ -1,4 +1,4 @@
-package br.com.andersonv.famousmovies.activity;
+package br.com.andersonv.famousmovies.model;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;

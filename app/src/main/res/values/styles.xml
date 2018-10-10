@@ -100,6 +100,14 @@
         <item name="android:layout_marginBottom">8dp</item>
     </style>
 
+    <style name="DetailNoData" parent="TextAppearance.AppCompat.Small.Inverse">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:text">@string/detail_data_not_found</item>
+        <item name="android:visibility">invisible</item>
+    </style>
+
     <style name="WhiteText" parent="@android:style/TextAppearance">
         <item name="android:textColor">#ffffff</item>
     </style>
