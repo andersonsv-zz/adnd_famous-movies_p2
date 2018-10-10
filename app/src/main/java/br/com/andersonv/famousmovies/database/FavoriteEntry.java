@@ -14,9 +14,9 @@ public class FavoriteEntry {
     private long id;
     private final String title;
     private final String poster;
-    private String overview;
+    private final String overview;
     @ColumnInfo(name = "vote_average")
-    private Double voteAverage;
+    private final Double voteAverage;
 
     @ColumnInfo(name = "release_date")
     private Date releaseDate;

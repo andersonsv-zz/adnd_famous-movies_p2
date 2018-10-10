@@ -2,6 +2,7 @@ package br.com.andersonv.famousmovies.adapter;
 
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,8 +34,9 @@ public class FavoriteRecyclerViewAdapter extends RecyclerView.Adapter<FavoriteRe
         this.mInflater = LayoutInflater.from(context);
     }
 
+    @NonNull
     @Override
-    public FavoriteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FavoriteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.favorite_item, parent, false);
 
@@ -43,7 +45,7 @@ public class FavoriteRecyclerViewAdapter extends RecyclerView.Adapter<FavoriteRe
     }
 
     @Override
-    public void onBindViewHolder(FavoriteViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FavoriteViewHolder holder, int position) {
         FavoriteEntry favoriteEntry = mFavoritesEntries.get(position);
 
         Picasso.with(mInflater.getContext())
@@ -68,10 +70,6 @@ public class FavoriteRecyclerViewAdapter extends RecyclerView.Adapter<FavoriteRe
             return 0;
         }
         return mFavoritesEntries.size();
-    }
-
-    public List<FavoriteEntry> getFavorites() {
-        return mFavoritesEntries;
     }
 
 

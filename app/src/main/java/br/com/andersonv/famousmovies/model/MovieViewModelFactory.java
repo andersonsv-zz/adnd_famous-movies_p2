@@ -2,6 +2,7 @@ package br.com.andersonv.famousmovies.model;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
+import android.support.annotation.NonNull;
 
 import br.com.andersonv.famousmovies.database.AppDatabase;
 
@@ -16,8 +17,9 @@ public class MovieViewModelFactory extends ViewModelProvider.NewInstanceFactory 
         mMovieId = movieId;
     }
 
+    @NonNull
     @Override
-    public <T extends ViewModel> T create(Class<T> modelClass) {
+    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         return (T) new MovieViewModel(mDb, mMovieId);
     }
 }

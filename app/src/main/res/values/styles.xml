@@ -32,7 +32,7 @@
 
     <style name="VoteAverage.50" parent="AppTheme">
         <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Small</item>
-        <item name="android:textSize">11dp</item>
+        <item name="android:textSize">11sp</item>
         <item name="android:layout_height">60dp</item>
         <item name="android:layout_width">60dp</item>
         <item name="android:textColor">@android:color/white</item>
