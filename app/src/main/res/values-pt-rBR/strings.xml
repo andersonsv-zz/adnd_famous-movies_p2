@@ -4,6 +4,7 @@
     <string name="error_message_list">Ocorreu um erro ao buscar a lista</string>
     <string name="most_popular">Mais populares</string>
     <string name="top_rated">Mais votados</string>
+    <string name="favorites">Favoritos</string>
     <string name="content_description_img_ivBackdrop">Imagem de fundo do filme</string>
     <string name="content_description_img_ivPoster">Poster do filme</string>
     <string name="content_description_img_offline">Imagem de erro informando a falta de internet</string>
@@ -15,4 +16,13 @@
     <string name="offline_no_internet">Sem internet?</string>
     <string name="offline_no_internet_retry">Tente novamente</string>
 
+    <!-- detail -->
+    <string name="detail_menu_share">Compartilhar vídeo</string>
+
+    <string name="detail_subtitle_overview">Sinopse</string>
+    <string name="detail_subtitle_reviews">Críticas</string>
+    <string name="detail_subtitle_trailers">Vídeos</string>
+    <string name="detail_data_not_found">Dados não encontrados</string>
+
+    <string name="content_description_img_ivTrailer">Imagem do trailer</string>
 </resources>
